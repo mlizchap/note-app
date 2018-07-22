@@ -6,8 +6,18 @@ class Note extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            note: [{ type: 'h1', pos: 0, html: 'header', touched: false }],
+            note: [{ type: 'h1', pos: 0, content: 'header', touched: false }],
          };
+    }
+    handleEdit = (e, content) => {
+        
+    }
+    handleChange = (e, content, index) => {
+        //console.log(e.currentTarget.innerText)
+        const note = this.state.note;
+        note[index].content = e.currentTarget.innerText
+        this.setState({ note: note })
+        
     }
     render() {
         return (
@@ -21,8 +31,10 @@ class Note extends Component {
                     {this.state.note.map((note, index) => {
                         return <ContentEditable 
                                     key={index}
-                                    html={`<${note.type}>${note.html}</${note.type}`}
+                                    html={`<${note.type}>${note.content}</${note.type}>`}
                                     disabled={false}
+                                    onChange={(e) => this.handleChange(e, note.content, index)}
+                                    onClick={(e) => this.handleEdit(e, note.index, note.content)}
                                 />        
                     })}
          
