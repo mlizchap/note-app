@@ -11,12 +11,15 @@ class Header extends Component {
         super(props);
         this.state = { edit: false };
     }
+    exitHeaderArea = (e) => {
+        this.props.handleOnBlur(e, this.props.headerIndex);
+        this.setState({ edit: false })
+    }
     render() {
         return (
             <div>
                 { (this.state.edit) ? 
-                    <HeaderInput onBlur={() => this.setState({ edit: false })} />
-                        : 
+                    <HeaderInput onBlur={ (e) => this.exitHeaderArea(e) } defaultValue={this.props.headerContent} /> : 
                     <HeaderContent onClick={() => this.setState({ edit: true })}>
                         {this.props.headerContent}
                     </HeaderContent> 
@@ -44,8 +47,9 @@ const HeaderInput = styled.input`
     font-size: ${mainTheme.HEADER_FONT_SIZE};
     font-family: ${mainTheme.MAIN_FONT};
     background-color: ${lightTheme.NOTE_BG};
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-bottom: 10px;
     width: 80%;
-    height: 30px;
     border: none;
-    background-color: 
 `;

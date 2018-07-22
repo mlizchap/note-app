@@ -73,13 +73,21 @@ class Note extends Component {
         this.setState({ content: content, editMode: false }, console.log(this.state.content))
     }
 
+    createHeader = (e, index) => {
+        //console.log(index, e.target.value)
+        var content = this.state.content;
+        console.log(this.state.content)
+        content[index].header = e.target.value;
+        this.setState({ content });
+    }
+
     render() {
         return (
             <NoteBody>
                 { this.state.content.map((item, index) => {
                     return (
                         <div key={index}>
-                            <Header headerContent={item.header} />
+                            <Header headerContent={item.header} handleOnBlur={this.createHeader} headerIndex={index}/>
                             { item.paras.map((para,ind) => 
                                 <Para 
                                     key={ind} 
