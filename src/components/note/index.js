@@ -13,39 +13,52 @@ class Note extends Component {
 
         this.state = {
             editMode: true,
-            content: 'test'
+            paras: ['test']
         }
     }
     changeEditMode = () => {
         this.setState({ editMode: !this.state.editMode })
     }
-    updateContent = (e) => {
-        this.setState({ content: e.target.value})
-    }
-    handleEdit = (e) => {
-        console.log(e.target.value)
-    }
     createOutput = (e) => {
         var input = e.target.value
+        var newParas = [];
         var start = 0;
+
+        // for dealing with new lines in the text area
         for (var i = 0; i < input.length; i++) {
             if (input[i] === "\n") {
-                input.slice(start, i);
+                if (start === 0) { 
+                    newParas.push(input.slice(start, i)); 
+                } else {
+                    newParas.push(input.slice(start + 1, i)); 
+                }
                 start = i;
             }
         }
-        console.log(input.slice(start))
+        if (newParas.length === 0) { 
+            newParas.push(input.slice(start))
+        } else {
+            newParas.push(input.slice(start + 1))
+        }
+        
+        console.log(newParas)
+        this.setState({ paras: newParas, editMode: false })
+ 
+        console.log(newParas)
     }
     render() {
         return (
             <div>
-                <Para 
-                    edit={this.state.editMode}
-                    content={this.state.content}
-                    handleEdit={this.changeEditMode}
-                    handleContent={this.updateContent}
-                    handleCreateOutput={this.createOutput}
-                />
+                {
+                    this.state.paras.map((para, index) => 
+                         <Para 
+                            edit={this.state.editMode}
+                            content={para}
+                            handleEdit={this.changeEditMode}
+                            handleCreateOutput={this.createOutput}
+                        />
+                    )
+                }
             </div>
         )
     }

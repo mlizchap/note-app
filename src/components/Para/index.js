@@ -26,6 +26,7 @@ const ParaOutput = styled.p`
     min-height: 30px;
     width: 80%;
     background-color: orange;
+    margin-top: 5px;
 `;
 
 
