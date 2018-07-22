@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const HeaderContent = styled.h2`
-    font-family: arial;
-    color: purple;
-    font-size: 2rem;
-    text-align: center;
-    width: 80%;
-    background-color: grey;
-`;
+import * as mainTheme from '../globalStyles/mainTheme';
+import * as lightTheme from '../globalStyles/lightTheme';
 
-const HeaderInput = styled.input`
-    color: yellow;
-    width: 80%;
-    font-size: 2rem;
-    height: 30px;
-`;
+
 
 class Header extends Component {
     constructor(props) {
@@ -39,3 +28,24 @@ class Header extends Component {
 }
 
 export default Header;
+
+const HeaderContent = styled.h2`
+    color: ${lightTheme.HEADER_FONT_COLOR};
+    font-size: ${mainTheme.HEADER_FONT_SIZE};
+    font-family: ${mainTheme.MAIN_FONT};
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+`;
+
+const HeaderInput = styled.input`
+    color: ${lightTheme.HEADER_FONT_COLOR};
+    font-size: ${mainTheme.HEADER_FONT_SIZE};
+    font-family: ${mainTheme.MAIN_FONT};
+    background-color: ${lightTheme.NOTE_BG};
+    width: 80%;
+    height: 30px;
+    border: none;
+    background-color: 
+`;
