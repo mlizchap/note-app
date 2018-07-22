@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //import Paras from '../Paras';
 import Para from '../Para';
+import Header from '../Header';
 
 class ParseHTML extends Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class ParseHTML extends Component {
                 { this.state.content.map((item, index) => {
                     return (
                         <div key={index}>
-                            <div>{item.header}</div>
+                            <Header headerContent={item.header} />
                             { item.paras.map((para,ind) => 
                                 <Para 
                                     key={ind} 

@@ -10,7 +10,6 @@ class Paras extends Component {
         super(props);
 
         this.state = {
-            editMode: true,
             paras: ['test'],
             // content: '<h1>this is a header</h1><p>first para</p><p>second para</p>'
         }
