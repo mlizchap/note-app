@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
-//import Paras from '../Paras';
 import Para from './Para';
 import Header from './Header';
 
+import * as lightTheme from '../globalStyles/lightTheme';
+
+const NoteBody = styled.div`
+    background-color: ${lightTheme.NOTE_BG};
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+`;
 
 class Note extends Component {
     constructor(props) {
@@ -15,7 +23,7 @@ class Note extends Component {
     }
     componentDidMount() {
         const parser=new DOMParser();
-        const htmlDoc=parser.parseFromString(this.state.data, "text/html");
+        const htmlDoc=parser.parseFromString(this.state.data, "text/html"); // this will eventually come from a DB
         const elems = htmlDoc.body.children;
         let values = [];
         let currHeaderIndex = -1;
@@ -36,7 +44,6 @@ class Note extends Component {
     }
 
     createOutput = (e, index, ind) => {
-        console.log(index)
         var headerIndex = ind;
         var paraIndex = index;
         var newParas = [];
@@ -44,32 +51,31 @@ class Note extends Component {
         var allParas;
         var input = e.target.value;
 
+        // looks for a new line in the textarea input, if there is one it is sliced up into new paragraphs accordingly
         for (var i = 0; i < input.length; i++) {
-            if (input[i] === "\n") {
-                if (start === 0) { 
-                    newParas.push(input.slice(start, i)); 
-                } else {
-                    newParas.push(input.slice(start + 1, i)); 
-                }
+            if (input[i] === "\n") { 
+                if (start === 0) { newParas.push(input.slice(start, i)); } 
+                else { newParas.push(input.slice(start + 1, i)); }
                 start = i;
             }
         }
+        // if there are no new lines
         if (newParas.length === 0) { 
             newParas.push(input.slice(start))
+        // for the remaining input
         } else {
             newParas.push(input.slice(start + 1))
         }
 
-        var content = this.state.content; 
+        var content = this.state.content; // creates a copy of staye
         allParas = [...content[headerIndex].paras.slice(0, paraIndex), ...newParas, ...content[headerIndex].paras.slice(paraIndex + 1)]
         content[headerIndex].paras = allParas;
         this.setState({ content: content, editMode: false }, console.log(this.state.content))
     }
 
     render() {
-        console.log(this.state.content)
         return (
-            <div>
+            <NoteBody>
                 { this.state.content.map((item, index) => {
                     return (
                         <div key={index}>
@@ -87,7 +93,7 @@ class Note extends Component {
                         </div>
                     )
                 }) }
-            </div>
+            </NoteBody>
         )
     }
 }

@@ -1,36 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-
 import Textarea from 'react-textarea-autosize';
-
-
-const textareaStyle = {
-    fontFamily: 'arial',
-    fontSize: '1.2em',
-    textAlign: 'center',
-    color: 'blue',
-    border: 'none',
-    overflow: 'auto',
-    outline: 'none',
-    height: '30px',
-    width: '80%',
-    // backgroundColor: 'orange',
-    resize: 'none',
-    minHeight: '30px',
-    backgroundColor: 'green',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-}
-const ParaOutput = styled.div`
-    font-family: arial;
-    font-size: 1.2em;
-    text-align: center;
-    color: palevioletred;
-    min-height: 30px;
-    width: 80%;
-    margin-top: 6px;
-`;
+import * as mainTheme from '../globalStyles/mainTheme';
+import * as lightTheme from '../globalStyles/lightTheme';
 
 class Para extends Component {
     constructor(props) {
@@ -47,7 +20,7 @@ class Para extends Component {
         return ( 
             <div>
                 { (this.state.edit) ? 
-                    <Textarea onBlur={(e) => this.exitTextarea(e)} defaultValue={this.props.content} style={textareaStyle} /> : 
+                    <StyledTextarea onBlur={(e) => this.exitTextarea(e)} defaultValue={this.props.content} /> : 
                     <ParaOutput onClick={() => this.setState({edit: true})}>{this.props.content}</ParaOutput> 
                 }               
             </div>
@@ -57,3 +30,29 @@ class Para extends Component {
 }
 
 export default Para;
+
+const StyledTextarea = styled(Textarea)`
+    color: ${lightTheme.PARA_FONT_COLOR};
+    background-color: ${lightTheme.NOTE_BG};
+    font-family: ${mainTheme.MAIN_FONT};
+    font-size: ${mainTheme.PARA_FONT_SIZE};
+    overflow: auto;
+    outline: none;
+    height: 30px;
+    width: 80%;
+    resize: none;
+    min-height: 20px;
+    margin-left: 20px;
+    border: none;
+`;
+
+const ParaOutput = styled.div`
+    color: ${lightTheme.PARA_FONT_COLOR};
+    background-color: ${lightTheme.NOTE_BG};
+    font-family: ${mainTheme.MAIN_FONT};
+    font-size: ${mainTheme.PARA_FONT_SIZE};
+    margin-left: 20px;
+    min-height: 30px;
+    width: 80%;
+    margin-top: 6px;
+`;
