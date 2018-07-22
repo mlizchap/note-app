@@ -69,7 +69,7 @@ class Note extends Component {
     render() {
         console.log(this.state.content)
         return (
-            <NoteSection>
+            <div>
                 { this.state.content.map((item, index) => {
                     return (
                         <div key={index}>
@@ -87,7 +87,7 @@ class Note extends Component {
                         </div>
                     )
                 }) }
-            </NoteSection>
+            </div>
         )
     }
 }
