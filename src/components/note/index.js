@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ContentEditable from 'react-contenteditable'
 import styled from 'styled-components'
 
-import EditableContent from '../EditableContent';
 import Para from '../Para';
 import './style.css';
 
@@ -19,7 +17,7 @@ class Note extends Component {
     changeEditMode = () => {
         this.setState({ editMode: !this.state.editMode })
     }
-    createOutput = (e) => {
+    createOutput = (e, index) => {
         var input = e.target.value
         var newParas = [];
         var start = 0;
@@ -41,10 +39,11 @@ class Note extends Component {
             newParas.push(input.slice(start + 1))
         }
         
-        console.log(newParas)
-        this.setState({ paras: newParas, editMode: false })
- 
-        console.log(newParas)
+        console.log(index)
+        this.setState({ 
+            paras: [...this.state.paras.slice(0, index), ...newParas, ...this.state.paras.slice(index + 1)], 
+            editMode: false 
+        }) 
     }
     render() {
         return (
@@ -52,10 +51,11 @@ class Note extends Component {
                 {
                     this.state.paras.map((para, index) => 
                          <Para 
+                            key={index}
                             edit={this.state.editMode}
                             content={para}
                             handleEdit={this.changeEditMode}
-                            handleCreateOutput={this.createOutput}
+                            handleCreateOutput={(e) => this.createOutput(e, index)}
                         />
                     )
                 }
