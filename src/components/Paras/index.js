@@ -11,9 +11,20 @@ class Paras extends Component {
 
         this.state = {
             editMode: true,
-            paras: ['test']
+            paras: ['test'],
+            // content: '<h1>this is a header</h1><p>first para</p><p>second para</p>'
         }
     }
+    // componentDidMount() {
+    //     const parser=new DOMParser();
+    //     const htmlDoc=parser.parseFromString(this.state.content, "text/html");
+    //     var elems = htmlDoc.body.children;
+
+    //     for (var i = 0; i < elems.length; i++) {
+    //         var tag = elems[i].tagName;
+    //         var value = elems[i].innerHTML;
+    //     }
+    // }
     changeEditMode = () => {
         this.setState({ editMode: !this.state.editMode })
     }
@@ -44,24 +55,24 @@ class Paras extends Component {
             editMode: false 
         }) 
     }
+    renderParas = () => {
+        return this.state.paras.map((para, index) => 
+            <Para 
+                key={index}
+                edit={this.state.editMode}
+                content={para}
+                handleEdit={this.changeEditMode}
+                handleCreateOutput={(e) => this.createOutput(e, index)}
+            />
+        )
+    }
     render() {
         return (
             <div>
-                {
-                    this.state.paras.map((para, index) => 
-                         <Para 
-                            key={index}
-                            edit={this.state.editMode}
-                            content={para}
-                            handleEdit={this.changeEditMode}
-                            handleCreateOutput={(e) => this.createOutput(e, index)}
-                        />
-                    )
-                }
+                { this.renderParas() }
             </div>
         )
     }
-    
 }
 
 export default Paras;
