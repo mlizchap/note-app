@@ -16,8 +16,9 @@ class Note extends Component {
         
     }
     handleChange = (e, content, index) => {
+        console.log(e.currentTarget.textContent)
         const note = this.state.note;
-        note[index].content = e.currentTarget.innerText
+        note[index].content = e.currentTarget.textContent
         this.setState({ note: note })        
     }
     render() {
