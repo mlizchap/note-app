@@ -5,13 +5,7 @@ import Para from './Para';
 import Header from './Header';
 
 import * as lightTheme from '../globalStyles/lightTheme';
-
-const NoteBody = styled.div`
-    background-color: ${lightTheme.NOTE_BG};
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
-`;
+import * as mainTheme from '../globalStyles/mainTheme';
 
 class Note extends Component {
     constructor(props) {
@@ -74,36 +68,102 @@ class Note extends Component {
     }
 
     createHeader = (e, index) => {
-        //console.log(index, e.target.value)
         var content = this.state.content;
-        console.log(this.state.content)
         content[index].header = e.target.value;
         this.setState({ content });
     }
 
     render() {
         return (
-            <NoteBody>
-                { this.state.content.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <Header headerContent={item.header} handleOnBlur={this.createHeader} headerIndex={index}/>
-                            { item.paras.map((para,ind) => 
-                                <Para 
-                                    key={ind} 
-                                    content={para} 
-                                    headerIndex={index}
-                                    paraIndex={ind}
-                                    handleEdit={(x) => console.log(x)}
-                                    handleCreateOutput={this.createOutput}
-                                /> 
-                            )}
-                        </div>
-                    )
-                }) }
-            </NoteBody>
+            <div>
+                <ButtonSection>
+                    <ButtonHeader>add header</ButtonHeader>
+                    <ButtonCodeblock>add codeblock</ButtonCodeblock>
+                    <ButtonHighlight>highlight</ButtonHighlight>
+                </ButtonSection>
+
+                <NoteBody>
+                    { this.state.content.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <Header headerContent={item.header} handleOnBlur={this.createHeader} headerIndex={index}/>
+                                { item.paras.map((para,ind) => 
+                                    <Para 
+                                        key={ind} 
+                                        content={para} 
+                                        headerIndex={index}
+                                        paraIndex={ind}
+                                        handleEdit={(x) => console.log(x)}
+                                        handleCreateOutput={this.createOutput}
+                                    /> 
+                                )}
+                            </div>
+                        )
+                    }) }
+                </NoteBody>
+            </div>
         )
     }
 }
 
 export default Note;
+
+const NoteBody = styled.div`
+    background-color: ${lightTheme.NOTE_BG};
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+`;
+
+const ButtonSection = styled.div`
+    height: 75px;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+`
+
+const StyledButton = styled.button`
+    font-family: ${mainTheme.MAIN_FONT};
+    color: white;
+    width: 150px;
+    letter-spacing: .1rem;
+    height: 50px;
+    font-size: ${mainTheme.BUTTON_FONT_SIZE}
+    border: none;
+    border-radius: 3px;
+    outline: none;
+`
+
+const ButtonHeader = StyledButton.extend`
+    background-color: ${lightTheme.HEADER_FONT_COLOR};
+    &:hover {
+        background-color: ${lightTheme.HEADER_FONT_COLOR_LIGHTER};
+        cursor: pointer;
+    }
+`
+
+const ButtonCodeblock = StyledButton.extend`
+    background-color: ${lightTheme.NOTE_BG};
+    color: ${lightTheme.PARA_FONT_COLOR};
+    font-family: monospace;
+    font-size: .9rem;
+    font-weight: bold;
+    &:hover {
+        background-color: ${lightTheme.CURRENT_BG}
+        cursor: pointer;
+    }
+`
+
+const ButtonHighlight = StyledButton.extend`
+    background-color: ${lightTheme.HIGHLIGHT_COLOR};
+    color: white;
+    &:hover {
+        background-color: ${lightTheme.HIGHLIGHT_COLOR_LIGHTER}
+        cursor: pointer;
+    }
+`

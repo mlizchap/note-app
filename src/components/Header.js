@@ -52,4 +52,5 @@ const HeaderInput = styled.input`
     margin-bottom: 10px;
     width: 80%;
     border: none;
+    outline: none;
 `;
