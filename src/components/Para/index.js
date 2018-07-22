@@ -9,24 +9,24 @@ const textareaStyle = {
     fontFamily: 'arial',
     fontSize: '1.5em',
     textAlign: 'center',
-    color: 'palevioletred',
+    color: 'blue',
     border: 'none',
     overflow: 'auto',
     outline: 'none',
     height: '30px',
     width: '80%',
-    backgroundColor: 'orange',
-    resize: 'none'  
+    // backgroundColor: 'orange',
+    resize: 'none',
+    minHeight: '30px'
 }
-const ParaOutput = styled.p`
+const ParaOutput = styled.div`
     font-family: arial;
     font-size: 1.5em;
     text-align: center;
     color: palevioletred;
     min-height: 30px;
     width: 80%;
-    background-color: orange;
-    margin-top: 5px;
+    margin-top: 7px;
 `;
 
 
@@ -34,13 +34,20 @@ const ParaOutput = styled.p`
 class Para extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            edit: true
+        }
+    }
+    exitTextarea = (e) => {
+        this.props.handleCreateOutput(e, this.props.paraIndex, this.props.headerIndex);
+        this.setState({ edit: false })
     }
     render() {
         return ( 
             <div>
-                { (this.props.edit) ? 
-                    <Textarea onBlur={this.props.handleCreateOutput} defaultValue={this.props.content} style={textareaStyle} /> : 
-                    <ParaOutput onClick={this.props.handleEdit}>{this.props.content}</ParaOutput> 
+                { (this.state.edit) ? 
+                    <Textarea onBlur={(e) => this.exitTextarea(e)} defaultValue={this.props.content} style={textareaStyle} /> : 
+                    <ParaOutput onClick={() => this.setState({edit: true})}>{this.props.content}</ParaOutput> 
                 }               
             </div>
         )

@@ -8,8 +8,7 @@ class ParseHTML extends Component {
         super(props);
         this.state = { 
             data: '<h1>this is a header</h1><p>first para</p><p>second para</p><h1>react</h1><p>one about state</p><p>two about props</p><p>three para about props</p><p>four para about props</p>',
-            content: [],
-            editMode: true
+            content: []
         };
     }
     componentDidMount() {
@@ -35,13 +34,13 @@ class ParseHTML extends Component {
     }
 
     createOutput = (e, index, ind) => {
-        // console.log(index, ind)
-        var headerIndex = index;
-        var paraIndex = ind;
-        var input = e.target.value;
+        console.log(index)
+        var headerIndex = ind;
+        var paraIndex = index;
         var newParas = [];
         var start = 0;
         var allParas;
+        var input = e.target.value;
 
         for (var i = 0; i < input.length; i++) {
             if (input[i] === "\n") {
@@ -60,14 +59,8 @@ class ParseHTML extends Component {
         }
 
         var content = this.state.content; 
-        //console.log(content)
-        console.log(content[headerIndex].paras.slice(0, paraIndex));
-        console.log(newParas)
-        console.log(content[headerIndex].paras.slice(paraIndex));
         allParas = [...content[headerIndex].paras.slice(0, paraIndex), ...newParas, ...content[headerIndex].paras.slice(paraIndex + 1)]
         content[headerIndex].paras = allParas;
-        // console.log(content)
-        // //console.log(content[headerIndex].paras)
         this.setState({ content: content, editMode: false }, console.log(this.state.content))
     }
 
@@ -83,9 +76,10 @@ class ParseHTML extends Component {
                                 <Para 
                                     key={ind} 
                                     content={para} 
-                                    edit={this.state.editMode}
-                                    handleEdit={() => this.setState({ editMode: true })}
-                                    handleCreateOutput={(e) => this.createOutput(e, index, ind)}
+                                    headerIndex={index}
+                                    paraIndex={ind}
+                                    handleEdit={(x) => console.log(x)}
+                                    handleCreateOutput={this.createOutput}
                                 /> 
                             )}
                         </div>
