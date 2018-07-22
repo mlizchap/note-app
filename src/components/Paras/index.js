@@ -29,7 +29,8 @@ class Paras extends Component {
         this.setState({ editMode: !this.state.editMode })
     }
     createOutput = (e, index) => {
-        var input = e.target.value
+        //var input = e.target.value
+        var { input } = this.props.input;
         var newParas = [];
         var start = 0;
 
@@ -50,13 +51,13 @@ class Paras extends Component {
             newParas.push(input.slice(start + 1))
         }
 
-        this.setState({ 
-            paras: [...this.state.paras.slice(0, index), ...newParas, ...this.state.paras.slice(index + 1)], 
-            editMode: false 
-        }) 
+        // this.setState({ 
+        //     paras: [...this.state.paras.slice(0, index), ...newParas, ...this.state.paras.slice(index + 1)], 
+        //     editMode: false 
+        // }) 
     }
     renderParas = () => {
-        return this.state.paras.map((para, index) => 
+        return this.props.paras.map((para, index) => 
             <Para 
                 key={index}
                 edit={this.state.editMode}

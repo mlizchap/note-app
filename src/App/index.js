@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Paras from '../components/Paras'
+//import Paras from '../components/Paras'
 import ParseHTML from '../components/ParseHTML';
 
 
@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Paras />
+        {/* <Paras /> */}
         <ParseHTML />
       </div>
     );

@@ -27,14 +27,11 @@ class ParseHTML extends Component {
                 values.push({ header: value, paras: [] });
                 currHeaderIndex++;
             } else if (tag === 'P') {
-                values[currHeaderIndex].paras.push({ para: value })
+                values[currHeaderIndex].paras.push(value)
             }
         }
 
         this.setState({ content: values});
-    }
-    changeEditMode = () => {
-        this.setState({ editMode: !this.state.editMode })
     }
 
     createOutput = (e, index, ind) => {
@@ -43,6 +40,7 @@ class ParseHTML extends Component {
         var paraIndex = ind;
         var input = e.target.value;
         var newParas = [];
+        var newParaAsObjects = [];
         var start = 0;
 
         for (var i = 0; i < input.length; i++) {
@@ -62,26 +60,10 @@ class ParseHTML extends Component {
         }
 
         var content = this.state.content; 
+        content[headerIndex].paras = newParas;
         console.log(content)
-        console.log(newParas)
-        content[headerIndex].paras[paraIndex] = newParas;
-        this.setState({ content }, console.log(this.state.content))
-        // this.setState({ 
-        //     content: content[headerIndex].paras.slice(0, paraIndex), 
-        //             ...newParas, 
-        //             ...content[headerIndex].paras.slice(paraIndex + 1)
-        // })
-        //console.log(this.state.content)
-        //console.log(newParas)
-
-        // this.setState({
-        //     content: [...this.state.content.slice(0, headerIndex),  ]
-        // })
-
-        // this.setState({ 
-        //     paras: [...this.state.paras.slice(0, index), ...newParas, ...this.state.paras.slice(index + 1)], 
-        //     editMode: false 
-        // }) 
+        //console.log(content[headerIndex].paras)
+        this.setState({ content, editMode: false }, console.log(this.state.content))
     }
 
     render() {
@@ -92,14 +74,13 @@ class ParseHTML extends Component {
                     return (
                         <div key={index}>
                             <div>{item.header}</div>
-                            { item.paras.map((i,ind) => 
+                            { item.paras.map((para,ind) => 
                                 <Para 
                                     key={ind} 
-                                    content={i.para} 
-                                    edit={this.state.editMode}
-                                    handleEdit={this.changeEditMode}
+                                    content={para} 
+                                    edit={true}
+                                    handleEdit={() => this.setState({ editMode: true })}
                                     handleCreateOutput={(e) => this.createOutput(e, index, ind)}
-
                                 /> 
                             )}
                         </div>
