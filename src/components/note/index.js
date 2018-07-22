@@ -6,18 +6,19 @@ class Note extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            note: [{ type: 'h1', pos: 0, content: 'header', touched: false }],
+            note: [
+                { type: 'h1', pos: 0, content: 'header', touched: false },
+                { type: 'p', pos: 1, content: 'paragraph', touched: false }
+            ],
          };
     }
     handleEdit = (e, content) => {
         
     }
     handleChange = (e, content, index) => {
-        //console.log(e.currentTarget.innerText)
         const note = this.state.note;
         note[index].content = e.currentTarget.innerText
-        this.setState({ note: note })
-        
+        this.setState({ note: note })        
     }
     render() {
         return (
