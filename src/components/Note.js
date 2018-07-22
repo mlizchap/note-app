@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 //import Paras from '../Paras';
-import Para from '../Para';
-import Header from '../Header';
+import Para from './Para';
+import Header from './Header';
 
 
-class ParseHTML extends Component {
+class Note extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -92,4 +92,4 @@ class ParseHTML extends Component {
     }
 }
 
-export default ParseHTML;
+export default Note;
