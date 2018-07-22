@@ -7,7 +7,7 @@ class ParseHTML extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            data: '<h1>this is a header</h1><p>first para</p><p>second para</p><h1>react</h1><p>para about state</p><p>para about props</p>',
+            data: '<h1>this is a header</h1><p>first para</p><p>second para</p><h1>react</h1><p>one about state</p><p>two about props</p><p>three para about props</p><p>four para about props</p>',
             content: [],
             editMode: true
         };
@@ -40,8 +40,8 @@ class ParseHTML extends Component {
         var paraIndex = ind;
         var input = e.target.value;
         var newParas = [];
-        var newParaAsObjects = [];
         var start = 0;
+        var allParas;
 
         for (var i = 0; i < input.length; i++) {
             if (input[i] === "\n") {
@@ -60,10 +60,15 @@ class ParseHTML extends Component {
         }
 
         var content = this.state.content; 
-        content[headerIndex].paras = newParas;
-        console.log(content)
-        //console.log(content[headerIndex].paras)
-        this.setState({ content, editMode: false }, console.log(this.state.content))
+        //console.log(content)
+        console.log(content[headerIndex].paras.slice(0, paraIndex));
+        console.log(newParas)
+        console.log(content[headerIndex].paras.slice(paraIndex));
+        allParas = [...content[headerIndex].paras.slice(0, paraIndex), ...newParas, ...content[headerIndex].paras.slice(paraIndex + 1)]
+        content[headerIndex].paras = allParas;
+        // console.log(content)
+        // //console.log(content[headerIndex].paras)
+        this.setState({ content: content, editMode: false }, console.log(this.state.content))
     }
 
     render() {
@@ -78,7 +83,7 @@ class ParseHTML extends Component {
                                 <Para 
                                     key={ind} 
                                     content={para} 
-                                    edit={true}
+                                    edit={this.state.editMode}
                                     handleEdit={() => this.setState({ editMode: true })}
                                     handleCreateOutput={(e) => this.createOutput(e, index, ind)}
                                 /> 

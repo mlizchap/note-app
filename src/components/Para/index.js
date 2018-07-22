@@ -39,7 +39,7 @@ class Para extends Component {
         return ( 
             <div>
                 { (this.props.edit) ? 
-                    <Textarea onChange={this.props.handleContent} onBlur={this.props.handleCreateOutput} defaultValue={this.props.content} style={textareaStyle} /> : 
+                    <Textarea onBlur={this.props.handleCreateOutput} defaultValue={this.props.content} style={textareaStyle} /> : 
                     <ParaOutput onClick={this.props.handleEdit}>{this.props.content}</ParaOutput> 
                 }               
             </div>
