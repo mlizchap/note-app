@@ -6,23 +6,8 @@ class Note extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            html: ['<h1>first header</h1>', '<p>first para</p>'],
-            currentPos: 0,
-            default: true
+            note: [{ type: 'h1', pos: 0, html: 'header', touched: false }],
          };
-    }
-    addHeader = (event, index) => {
-        this.setState({ html: [...this.state.html, '<h1>edit header</h1>', '<p>edit para</p>']})
-    }
-    handleChange = (index, e) => { }
-    
-    changePosition = (index, e) => {
-        this.setState({ currentPos: index});
-    }
-    handleEnterPress = (index, e) => {
-        if (e.key === 'Enter') {
-            //console.log('new para')
-        }
     }
     render() {
         return (
@@ -33,14 +18,11 @@ class Note extends Component {
                     <button>Highlight</button>
                 </div>
                 <div className="body">
-                    {this.state.html.map((i, index) => {
+                    {this.state.note.map((note, index) => {
                         return <ContentEditable 
                                     key={index}
-                                    html={i}
+                                    html={`<${note.type}>${note.html}</${note.type}`}
                                     disabled={false}
-                                    onClick={(e) => this.changePosition(index, e)}
-                                    onChange={(e) => this.handleChange(index, e)}
-                                    onKeyPress={(e) => this.handleEnterPress(index, e)}
                                 />        
                     })}
          
